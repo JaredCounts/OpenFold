@@ -60,18 +60,27 @@ def ray_segment_intersect_2D(segment, origin, direction):
 	return None
 
 # cast a ray from 'origin' towards 'direction'
-# will return a tuple (x,y) 
-#  	where (x,y) is the first position where the ray intersects a segment
+# will return a list of tuples (x,y) 
+#  	where (x,y) is the position where the ray intersects a segment
+#	ordered by distance from origin
 # if no intersection is found, None is returned
 # http://stackoverflow.com/a/32146853/6153561
-def ray_check_2D(segments, origin, direction):
-	minIntersectionT = float("inf")
+def ray_cast_2D(segments, origin, direction):
+	intersectionTList = []
 	for segment in segments:
 		t = ray_segment_intersect_2D(segment, origin, direction)
 		if t is not None:
-			minIntersectionT = min(minIntersectionT, t)
+			intersectionTList.append(t)
 
-	if minIntersectionT == float("inf"):
+	if len(intersectionTList) == 0:
 		return None
 
-	return add(origin, mult(direction, t1)
+	intersectionTList.sort()
+
+	intersections = []
+	for t in intersectionTList:
+		# origin + direction * t
+		intersection = add(origin, mult(direction, t)
+		intersections.append(intersection)
+
+	return intersections
