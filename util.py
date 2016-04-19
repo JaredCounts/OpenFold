@@ -1,4 +1,4 @@
-
+# ---------- Vector stuff ----------
 # http://stackoverflow.com/questions/1984799/cross-product-of-two-vectors-in-python
 def cross(a, b):
     c = [a[1]*b[2] - a[2]*b[1],
@@ -40,6 +40,7 @@ def mult(a, scalar):
 		c.append(coeff * scalar)
 	return c
 
+# ---------- ray casting ----------
 # if there is an intersection:
 # 	returns t such that
 # 	origin + t * direction = intersection point on segment
@@ -72,5 +73,5 @@ def ray_check_2D(segments, origin, direction):
 
 	if minIntersectionT == float("inf"):
 		return None
-		
+
 	return add(origin, mult(direction, t1)
