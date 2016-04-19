@@ -4,6 +4,9 @@ class Slice(object):
 		self.axis_position = 0
 		self.segments = []
 
+	# get index of axis this slice is perpendicular to
+	# eg, if it is perpendicular to (0,1,0), 
+	# 	then 1 is returned since the y axis is at index 1
 	def axisIndex(self):
 		index = 0
 		if self.axis[0] != 0:
