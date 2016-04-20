@@ -11,25 +11,20 @@ def notch(slices):
 	referenceAxis = slices[0].axis
 
 	notches = {}
-	for sliceOne in slices:
-		if sliceOne not in notches:
-			notches[sliceOne] = []
+	for sliceA in slices:
+		# only do every slice on the reference axis
+		if sliceA.axis != referenceAxis:
+			continue
 
-		for sliceTwo in slices:
-			if sliceOne.axis == sliceTwo.axis:
+		if sliceA not in notches:
+			notches[sliceA] = []
+
+		for sliceB in slices:
+			if sliceA.axis == sliceB.axis:
 				continue
 
-			if sliceTwo not in notches:
-				notches[sliceTwo] = []
-
-			sliceA = sliceOne
-			sliceB = sliceTwo
-			if referenceAxis == sliceOne.axis:
-				sliceA = sliceOne
-				sliceB = sliceTwo
-			else:
-				sliceA = sliceTwo
-				sliceB = sliceOne
+			if sliceB not in notches:
+				notches[sliceB] = []
 
 			# sliceA == the slice with the axis matching the reference axis
 			# this way we can ensure we always notch from the same side for slices with the same axis
