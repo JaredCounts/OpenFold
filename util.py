@@ -18,16 +18,21 @@ def dot(a,b):
 # returns a + b
 def add(a,b):
 	assert len(a) == len(b)
-	return [a[0] + b[0],
-			a[1] + b[1],
-			a[2] + b[2]]
+
+	c = []
+	for i in range(0, len(a)):
+		c.append(a[i] + b[i])
+	return c
 
 # returns b - a
 def diff(b,a):
 	assert len(a) == len(b)
-	return [b[0] - a[0],
-			b[1] - a[1],
-			b[2] - a[2]]
+
+	c = []
+	for i in range(0, len(a)):
+		c.append(b[i] - a[i])
+
+	return c
 
 # the determinant between two 2d vectors
 def det_2D(a,b):
@@ -51,8 +56,13 @@ def ray_segment_intersect_2D(segment, origin, direction):
 	AToB = diff(segment[1], segment[0])
 	rayPerp = (-direction[1], direction[0])
 
-	t1 = det_2D(AToB, AToOrigin) / dot(AToB, rayPerp)
-	t2 = dot(AToOrigin, rayPerp) / dot(AToB, rayPerp)
+	factor = dot(AToB, rayPerp)
+
+	if factor == 0: # entire segment, I think. Just return none
+		return None
+
+	t1 = det_2D(AToB, AToOrigin) / factor
+	t2 = dot(AToOrigin, rayPerp) / factor
 
 	if t1 >= 0 and (t2 >= 0 and t2 <= 1):
 		return t1
