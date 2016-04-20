@@ -22,7 +22,7 @@ def make_cuts(stlFile, svgOutput):
 
 	segments = layout(slices, 10)
 	
-	svg = svgwrite.Drawing(output, profile='tiny')
+	svg = svgwrite.Drawing(svgOutput, profile='tiny')
 	for segment in segments:
 		svg.add(svg.line(
 						segment[0], 
