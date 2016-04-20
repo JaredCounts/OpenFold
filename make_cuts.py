@@ -3,6 +3,7 @@ from layout import *
 from slicer import *
 from flexurizer import *
 def make_cuts():
+	pass
 	# slices = slice(file)
 	# notches = notch(slices)
 	# flexures = flexurize(slices)
