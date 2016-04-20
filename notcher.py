@@ -88,5 +88,5 @@ def notch(slices):
 	return notches
 
 # simple test
-slices = test_box()
-print(notch(slices)[slices[0]])
+# slices = test_box()
+# print(notch(slices)[slices[0]])
