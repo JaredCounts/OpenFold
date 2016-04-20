@@ -80,7 +80,7 @@ def ray_cast_2D(segments, origin, direction):
 	intersections = []
 	for t in intersectionTList:
 		# origin + direction * t
-		intersection = add(origin, mult(direction, t)
+		intersection = add(origin, mult(direction, t))
 		intersections.append(intersection)
 
 	return intersections
