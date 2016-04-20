@@ -51,6 +51,7 @@ def mult(a, scalar):
 # 	origin + t * direction = intersection point on segment
 # otherwise
 #  	returns None
+# http://stackoverflow.com/a/32146853/6153561
 def ray_segment_intersect_2D(segment, origin, direction):
 	AToOrigin = diff(origin, segment[0])
 	AToB = diff(segment[1], segment[0])
@@ -74,7 +75,6 @@ def ray_segment_intersect_2D(segment, origin, direction):
 #  	where (x,y) is the position where the ray intersects a segment
 #	ordered by distance from origin
 # if no intersection is found, None is returned
-# http://stackoverflow.com/a/32146853/6153561
 def ray_cast_2D(segments, origin, direction):
 	intersectionTList = []
 	for segment in segments:
