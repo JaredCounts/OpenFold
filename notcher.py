@@ -12,15 +12,19 @@ def notch(slices):
 
 	notches = {}
 	for sliceOne in slices:
-		
-		for sliceTwo in slices:
+		if sliceOne not in notches:
+			notches[sliceOne] = []
 
+		for sliceTwo in slices:
 			if sliceOne.axis == sliceTwo.axis:
 				continue
 
+			if sliceTwo not in notches:
+				notches[sliceTwo] = []
+
 			sliceA = sliceOne
 			sliceB = sliceTwo
-			if referenceAxis == sliceOneAxis
+			if referenceAxis == sliceOne.axis:
 				sliceA = sliceOne
 				sliceB = sliceTwo
 			else:
@@ -43,10 +47,7 @@ def notch(slices):
 			sliceAIndex = sliceA.axisIndex()
 			sliceBIndex = sliceB.axisIndex()
 
-			# sliceA frame of refence
-			# where (a,b) is (x,y,z) minus sliceA.axis digit
-			# so if sliceA.axis == (0,0,1), then (x,y,z) becomes (x,y)
-			
+			# determine intersection point on slice A
 			sliceANotchAxisIndex = 0
 			if sliceBIndex < verticalIndex:
 				sliceANotchAxisIndex = 0
@@ -60,6 +61,7 @@ def notch(slices):
 			sliceANotchBottomRayDirection = [0,0]
 			sliceANotchBottomRayDirection[sliceAVerticalAxisIndex] = 1
 
+			# determine all the points on sliceA along the intersection line with sliceB
 			sliceAIntersections = ray_cast_2D(sliceA.segments, sliceANotchBottomRayOrigin, sliceANotchBottomRayDirection)
 
 			sliceBNotchAxisIndex = 0
@@ -77,8 +79,18 @@ def notch(slices):
 
 			sliceBIntersections = ray_cast_2D(sliceB.segments, sliceBNotchBottomRayOrigin, sliceBNotchBottomRayDirection)
 
-			print(sliceAIntersections)
-			print(sliceBIntersections)
+			for i in range(0, len(sliceAIntersections), 2):
+				sliceAIntersectionA = sliceAIntersections[i]
+				sliceAIntersectionB = sliceAIntersections[i+1]
+				sliceAMidPoint = mult(add(sliceAIntersectionA, sliceAIntersectionB), 0.5)
+				notches[sliceA].append( (sliceAIntersectionA, sliceAMidPoint) )
+
+				sliceBIntersectionA = sliceBIntersections[i]
+				sliceBIntersectionB = sliceBIntersections[i+1]
+				sliceBMidPoint = mult(add(sliceAIntersectionA, sliceAIntersectionB), 0.5)
+				notches[sliceB].append( (sliceBMidPoint, sliceBIntersectionB) )
+
+	return notches
 
 slices = test_box()
-print(notch(slices))
+print(notch(slices)[slices[0]])
