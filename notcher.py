@@ -11,12 +11,24 @@ def notch(slices):
 	referenceAxis = slices[0].axis
 
 	notches = {}
-	for sliceA in slices:
+	for sliceOne in slices:
 		
-		for sliceB in slices:
+		for sliceTwo in slices:
 
-			if sliceB.axis == sliceA.axis:
+			if sliceOne.axis == sliceTwo.axis:
 				continue
+
+			sliceA = sliceOne
+			sliceB = sliceTwo
+			if referenceAxis == sliceOneAxis
+				sliceA = sliceOne
+				sliceB = sliceTwo
+			else:
+				sliceA = sliceTwo
+				sliceB = sliceOne
+
+			# sliceA == the slice with the axis matching the reference axis
+			# this way we can ensure we always notch from the same side for slices with the same axis
 
 			# vertical axis is the axis that the slices are not perpendicular to
 			verticalAxis = cross(sliceA.axis, sliceB.axis)
@@ -41,8 +53,6 @@ def notch(slices):
 			else:
 				sliceANotchAxisIndex = 1
 			sliceAVerticalAxisIndex = 1 - sliceANotchAxisIndex
-
-			print("on slice A, the notch is where the axis", sliceANotchAxisIndex, "is equal to", sliceB.axis_position)
 
 			sliceANotchBottomRayOrigin = [0,0]
 			sliceANotchBottomRayOrigin[sliceANotchAxisIndex] = sliceB.axis_position
