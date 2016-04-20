@@ -30,53 +30,9 @@ def notch(slices):
 			# sliceA == the slice with the axis matching the reference axis
 			# this way we can ensure we always notch from the same side for slices with the same axis
 
-			# vertical axis is the axis that the slices are not perpendicular to
-			verticalAxis = cross(sliceA.axis, sliceB.axis)
-			# determine which vector component is the vertical axis (0 for x, 1 for y, 2 for z)
-			verticalIndex = 0
-			if verticalAxis[0] != 0:
-				verticalIndex = 0
-			elif verticalAxis[1] != 0:
-				verticalIndex = 1
-			else:
-				verticalIndex = 2
-
-			sliceAIndex = sliceA.axisIndex()
-			sliceBIndex = sliceB.axisIndex()
-
-			# determine intersection point on slice A
-			sliceANotchAxisIndex = 0
-			if sliceBIndex < verticalIndex:
-				sliceANotchAxisIndex = 0
-			else:
-				sliceANotchAxisIndex = 1
-			sliceAVerticalAxisIndex = 1 - sliceANotchAxisIndex
-
-			# sliceB intersects sliceA where sliceANotchAxisIndex vector component equals sliceB.axis_position (in sliceA's frame of reference)
-
-			sliceANotchBottomRayOrigin = [0,0]
-			sliceANotchBottomRayOrigin[sliceANotchAxisIndex] = sliceB.axis_position
-			sliceANotchBottomRayOrigin[sliceAVerticalAxisIndex] = -99999 # really big number
-			sliceANotchBottomRayDirection = [0,0]
-			sliceANotchBottomRayDirection[sliceAVerticalAxisIndex] = 1
-
 			# determine all the points on sliceA along the intersection line with sliceB
-			sliceAIntersections = ray_cast_2D(sliceA.segments, sliceANotchBottomRayOrigin, sliceANotchBottomRayDirection)
-
-			sliceBNotchAxisIndex = 0
-			if sliceAIndex < verticalIndex:
-				sliceBNotchAxisIndex = 0
-			else:
-				sliceBNotchAxisIndex = 1
-			sliceBVerticalAxisIndex = 1 - sliceBNotchAxisIndex
-
-			sliceBNotchBottomRayOrigin = [0,0]
-			sliceBNotchBottomRayOrigin[sliceBNotchAxisIndex] = sliceA.axis_position
-			sliceBNotchBottomRayOrigin[sliceBVerticalAxisIndex] = -99999 # really big number
-			sliceBNotchBottomRayDirection = [0,0]
-			sliceBNotchBottomRayDirection[sliceBVerticalAxisIndex] = 1
-
-			sliceBIntersections = ray_cast_2D(sliceB.segments, sliceBNotchBottomRayOrigin, sliceBNotchBottomRayDirection)
+			sliceAIntersections = slice_intersections_on_first(sliceA, sliceB)
+			sliceBIntersections = slice_intersections_on_first(sliceB, sliceA) 
 
 			for i in range(0, len(sliceAIntersections), 2):
 				sliceAIntersectionA = sliceAIntersections[i]
@@ -90,6 +46,44 @@ def notch(slices):
 				notches[sliceB].append( (sliceBMidPoint, sliceBIntersectionB) )
 
 	return notches
+
+# returns the vector component index of the vertical direction for two intersecting slices
+# eg, if sliceA lies along the X plane, sliceB lies along the Y plane, then this will return 2 for Z
+def vertical_index(sliceA, sliceB):
+	verticalAxis = cross(sliceA.axis, sliceB.axis)
+	# determine which vector component is the vertical axis (0 for x, 1 for y, 2 for z)
+	verticalIndex = 0
+	if verticalAxis[0] != 0:
+		verticalIndex = 0
+	elif verticalAxis[1] != 0:
+		verticalIndex = 1
+	else:
+		verticalIndex = 2
+	return verticalIndex
+
+# given sliceA and sliceB slices
+# returns all the edge and vertex points on sliceA that intersect with sliceB
+# 	in sliceA's frame of reference (ie. (x,y) corresponds to the (x,y) axes in sliceA)
+def slice_intersections_on_first(sliceA, sliceB):
+	verticalIndex = vertical_index(sliceA, sliceB)
+	# determine intersection point on slice A
+	sliceANotchAxisIndex = 0
+	if sliceB.axisIndex() < verticalIndex:
+		sliceANotchAxisIndex = 0
+	else:
+		sliceANotchAxisIndex = 1
+	sliceAVerticalAxisIndex = 1 - sliceANotchAxisIndex
+
+	# sliceB intersects sliceA where sliceANotchAxisIndex vector component equals sliceB.axis_position (in sliceA's frame of reference)
+
+	sliceANotchBottomRayOrigin = [0,0]
+	sliceANotchBottomRayOrigin[sliceANotchAxisIndex] = sliceB.axis_position
+	sliceANotchBottomRayOrigin[sliceAVerticalAxisIndex] = -99999 # really big number
+	sliceANotchBottomRayDirection = [0,0]
+	sliceANotchBottomRayDirection[sliceAVerticalAxisIndex] = 1
+
+	# determine all the points on sliceA along the intersection line with sliceB
+	return ray_cast_2D(sliceA.segments, sliceANotchBottomRayOrigin, sliceANotchBottomRayDirection)
 
 # simple test
 # slices = test_box()
