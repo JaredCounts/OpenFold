@@ -12,7 +12,7 @@ def notch(slices):
 
 	notches = {}
 	for sliceA in slices:
-		# only do every slice on the reference axis
+		# we do every slice pair such that sliceA is on the referenceAxis and sliceB is on the other axis
 		if sliceA.axis != referenceAxis:
 			continue
 
@@ -20,6 +20,7 @@ def notch(slices):
 			notches[sliceA] = []
 
 		for sliceB in slices:
+			# sliceA won't intersect with sliceB if they're on the same axis
 			if sliceA.axis == sliceB.axis:
 				continue
 
@@ -31,6 +32,7 @@ def notch(slices):
 
 			# vertical axis is the axis that the slices are not perpendicular to
 			verticalAxis = cross(sliceA.axis, sliceB.axis)
+			# determine which vector component is the vertical axis (0 for x, 1 for y, 2 for z)
 			verticalIndex = 0
 			if verticalAxis[0] != 0:
 				verticalIndex = 0
@@ -49,6 +51,8 @@ def notch(slices):
 			else:
 				sliceANotchAxisIndex = 1
 			sliceAVerticalAxisIndex = 1 - sliceANotchAxisIndex
+
+			# sliceB intersects sliceA where sliceANotchAxisIndex vector component equals sliceB.axis_position (in sliceA's frame of reference)
 
 			sliceANotchBottomRayOrigin = [0,0]
 			sliceANotchBottomRayOrigin[sliceANotchAxisIndex] = sliceB.axis_position
