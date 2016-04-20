@@ -82,7 +82,7 @@ def notch(slices):
 
 				sliceBIntersectionA = sliceBIntersections[i]
 				sliceBIntersectionB = sliceBIntersections[i+1]
-				sliceBMidPoint = mult(add(sliceAIntersectionA, sliceAIntersectionB), 0.5)
+				sliceBMidPoint = mult(add(sliceBIntersectionA, sliceBIntersectionB), 0.5)
 				notches[sliceB].append( (sliceBMidPoint, sliceBIntersectionB) )
 
 	return notches
