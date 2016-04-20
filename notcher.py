@@ -4,6 +4,13 @@ from util import *
 # input: list of slices
 # output: a dictionary of slices to line segments of where notches should be
 def notch(slices):
+	if len(slices) == 0:
+		return {}
+
+	# used to determine which notches will be from top and which will be from bottom
+	referenceAxis = slices[0].axis
+
+	notches = {}
 	for sliceA in slices:
 		
 		for sliceB in slices:
@@ -37,15 +44,31 @@ def notch(slices):
 
 			print("on slice A, the notch is where the axis", sliceANotchAxisIndex, "is equal to", sliceB.axis_position)
 
-			
+			sliceANotchBottomRayOrigin = [0,0]
+			sliceANotchBottomRayOrigin[sliceANotchAxisIndex] = sliceB.axis_position
+			sliceANotchBottomRayOrigin[sliceAVerticalAxisIndex] = -99999 # really big number
+			sliceANotchBottomRayDirection = [0,0]
+			sliceANotchBottomRayDirection[sliceAVerticalAxisIndex] = 1
 
+			sliceAIntersections = ray_cast_2D(sliceA.segments, sliceANotchBottomRayOrigin, sliceANotchBottomRayDirection)
 
+			sliceBNotchAxisIndex = 0
+			if sliceAIndex < verticalIndex:
+				sliceBNotchAxisIndex = 0
+			else:
+				sliceBNotchAxisIndex = 1
+			sliceBVerticalAxisIndex = 1 - sliceBNotchAxisIndex
 
-	# for each slice on x axis
-		# for each slice on other axis
-			# get intersection line
-			# determine where along each slice to add segments
-	pass
+			sliceBNotchBottomRayOrigin = [0,0]
+			sliceBNotchBottomRayOrigin[sliceBNotchAxisIndex] = sliceA.axis_position
+			sliceBNotchBottomRayOrigin[sliceBVerticalAxisIndex] = -99999 # really big number
+			sliceBNotchBottomRayDirection = [0,0]
+			sliceBNotchBottomRayDirection[sliceBVerticalAxisIndex] = 1
+
+			sliceBIntersections = ray_cast_2D(sliceB.segments, sliceBNotchBottomRayOrigin, sliceBNotchBottomRayDirection)
+
+			print(sliceAIntersections)
+			print(sliceBIntersections)
 
 slices = test_box()
 print(notch(slices))
