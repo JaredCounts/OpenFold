@@ -8,7 +8,7 @@ from util import *
 # https://pypi.python.org/pypi/svgwrite/
 import svgwrite
 
-def make_cuts(stlFile, output):
+def make_cuts(stlFile, svgOutput):
 	# slices = slice(file)
 	slices = test_box() # placeholder
 	notches = notch(slices)
