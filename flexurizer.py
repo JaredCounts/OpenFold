@@ -1,0 +1,2 @@
+def flexurize(slices):
+	pass
