@@ -24,8 +24,8 @@ def layout(slices, margin, canvasWidth):
 			totalWidth = margin
 
 		for segment in slice.segments:
-			pointA = add(segment[0], offset)
-			pointB = add(segment[1], offset)
+			pointA = add(diff(segment[0], minReach), offset)
+			pointB = add(diff(segment[1], minReach), offset)
 			segments.append( (pointA, pointB) )
 
 		offset[0] += range[0] + margin
