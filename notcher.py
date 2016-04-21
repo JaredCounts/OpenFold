@@ -39,6 +39,8 @@ def notch(slices):
 
 			if len(sliceAIntersections) != len(sliceBIntersections):
 				continue
+			if len(sliceAIntersections) % 2 != 0:
+				continue
 
 			# assume that every pair of intersections on each slice corresponds to a "filled" region
 			# (TODO this assumption breaks if the intersection is tangent to some part of the slice)
