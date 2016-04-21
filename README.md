@@ -12,6 +12,7 @@ To use, call `make_cuts(stlFile, svgOutput)` where `stlFile` is the file path to
 * Interactive UI
 * Shape labeling for assembly
 * Parameterize notch size, flexure size, densities, etc
+** Could parameterize based on material parameters (eg. material width, stiffness, etc)
 * Improved layout engine (better packing)
 * Lovepop style notching (alternating sides)
 
@@ -19,6 +20,7 @@ To use, call `make_cuts(stlFile, svgOutput)` where `stlFile` is the file path to
 * Slicer missing axis aligned segments.
 * Slices at origin getting skipped by slicer.
 * Overlapping shapes on layout
+* Notches skipped when there's an odd number of intersections
 
 ## References
 * [The Creation of V-fold Animal Pop-Up Cards from 3D Models Using a Directed Acyclic Graph](http://link.springer.com/chapter/10.1007%2F978-3-642-35473-1_47)
