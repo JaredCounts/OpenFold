@@ -21,14 +21,14 @@ def slice(stlFile, sliceDensity):
 
 	for xPlane in range(0, int(sliceXCount)):
 		print('on x: slicing', xPlane, 'out of', int(sliceXCount))
-		x = xPlane * meshRange[0] / int(sliceXCount)
+		x = meshMin[0] + xPlane * meshRange[0] / int(sliceXCount)
 		thisSlice = slice_on_plane(stlMesh, 0, x)
 		if thisSlice is not None:
 			slices.append(thisSlice)
 
 	for yPlane in range(0, int(sliceYCount)):
 		print('on y: slicing', yPlane, 'out of', int(sliceYCount))
-		y = yPlane * meshRange[1] / int(sliceYCount)
+		y = meshMin[1] + yPlane * meshRange[1] / int(sliceYCount)
 
 		thisSlice = slice_on_plane(stlMesh, 1, y)
 		if thisSlice is not None:
@@ -72,6 +72,9 @@ def slice_on_plane(stlMesh, planeIndex, planePosition):
 			segment.append(segment2Intersection[:planeIndex] + segment2Intersection[planeIndex+1:])
 		if segment3Intersection != None:
 			segment.append(segment3Intersection[:planeIndex] + segment3Intersection[planeIndex+1:])
+		
+		if len(segment) == 3: # 3 segments intersect?
+			segment.pop() 
 
 		if len(segment) != 2:
 			# print("segment not 2 points.", len(segment), "points")
@@ -79,6 +82,7 @@ def slice_on_plane(stlMesh, planeIndex, planePosition):
 		sliceSegments.append(segment)
 
 	if len(sliceSegments) == 0:
+		print("no segments")
 		return None
 
 	thisSlice = Slice()
