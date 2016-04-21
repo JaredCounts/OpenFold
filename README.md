@@ -31,6 +31,7 @@ To use, call `make_cuts(stlFile, svgOutput)` where `stlFile` is the file path to
 * Rename 'index' to 'axis' when referring to specific vector coefficients to be more clear
 * Folders - eg. /pipeline, /math, etc
 * Consistent naming (instead of sometimes using camel casing and sometimes using '_')
+	* http://stackoverflow.com/a/159745/6153561
 
 ## References
 * [The Creation of V-fold Animal Pop-Up Cards from 3D Models Using a Directed Acyclic Graph](http://link.springer.com/chapter/10.1007%2F978-3-642-35473-1_47)
