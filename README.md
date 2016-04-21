@@ -12,7 +12,7 @@ To use, call `make_cuts(stlFile, svgOutput)` where `stlFile` is the file path to
 * Interactive UI
 * Shape labeling for assembly
 * Parameterize notch size, flexure size, densities, etc
-** Could parameterize based on material parameters (eg. material width, stiffness, etc)
+	* Could parameterize based on material parameters (eg. material width, stiffness, etc)
 * Improved layout engine (better packing)
 * Lovepop style notching (alternating sides)
 
