@@ -9,8 +9,9 @@ from util import *
 import svgwrite
 
 def make_cuts(stlFile, svgOutput):
-	slices = slice(stlFile, 2/10)
-	# slices = test_box() # placeholder
+	sliceDensity = 2/10
+	slices = slice(stlFile, sliceDensity)
+
 	notches = notch(slices)
 	# # flexures = flexurize(slices)
 
@@ -22,11 +23,13 @@ def make_cuts(stlFile, svgOutput):
 
 	segments = layout(slices, 10, 400)
 	
+	cutScalingFactor = 2
+
 	svg = svgwrite.Drawing(svgOutput, profile='tiny')
 	for segment in segments:
 		svg.add(svg.line(
-						mult(segment[0], 2), 
-						mult(segment[1], 2), 
+						mult(segment[0], cutScalingFactor), 
+						mult(segment[1], cutScalingFactor), 
 						stroke=svgwrite.rgb(0, 0, 0, '%'), 
 						stroke_width=2))
 	svg.save()
