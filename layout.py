@@ -19,8 +19,8 @@ def layout(slices, margin, canvasWidth):
 		totalWidth += range[0] + margin
 
 		if totalWidth > canvasWidth:
-			offset[1] += layerMaxHeight + margin
 			offset[0] = margin
+			offset[1] += layerMaxHeight + margin
 			totalWidth = margin
 
 		for segment in slice.segments:
