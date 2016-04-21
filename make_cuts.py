@@ -9,18 +9,18 @@ from util import *
 import svgwrite
 
 def make_cuts(stlFile, svgOutput):
-	slices = slice(stlFile, 5/10)
+	slices = slice(stlFile, 2/10)
 	# slices = test_box() # placeholder
-	# notches = notch(slices)
+	notches = notch(slices)
 	# # flexures = flexurize(slices)
 
-	# for slice in slices:
-	# 	slice_notches = notches[slice]
+	for currentSlice in slices:
+	 	slice_notches = notches[currentSlice]
 	# 	#slice_flexures = flexures[slice]
-	# 	slice.segments.extend(slice_notches)
+	 	currentSlice.segments.extend(slice_notches)
 	# 	#slice.segments.extend(slice_flexures)
 
-	segments = layout(slices, 5, 400)
+	segments = layout(slices, 10, 400)
 	
 	svg = svgwrite.Drawing(svgOutput, profile='tiny')
 	for segment in segments:
