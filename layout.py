@@ -3,18 +3,29 @@ from util import *
 # output:
 # 	a list of line segments
 # 	all in a single frame of reference
-def layout(slices, margin):
+def layout(slices, margin, canvasWidth):
 	segments = []
 
 	offset = [margin,margin]
+	totalWidth = 0
+	layerMaxHeight = 0
 	for slice in slices:
 		minReach = min_from_segments(slice.segments)
 		maxReach = max_from_segments(slice.segments)
 		range = diff(maxReach, minReach)
 
+		layerMaxHeight = max(layerMaxHeight, range[1])
+
+		totalWidth += range[0] + margin
+
+		if totalWidth > canvasWidth:
+			offset[1] += layerMaxHeight + margin
+			offset[0] = margin
+			totalWidth = margin
+
 		for segment in slice.segments:
-			pointA = add(diff(segment[0], minReach), offset)
-			pointB = add(diff(segment[1], minReach), offset)
+			pointA = add(segment[0], offset)
+			pointB = add(segment[1], offset)
 			segments.append( (pointA, pointB) )
 
 		offset[0] += range[0] + margin
