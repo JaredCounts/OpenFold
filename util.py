@@ -94,3 +94,42 @@ def ray_cast_2D(segments, origin, direction):
 		intersections.append(intersection)
 
 	return intersections
+
+# ---- other intersection tests -----
+
+# see if point is between the segment points
+def colinear_point_on_segment(point, segmentPointA, segmentPointB):
+	pointToSegA = diff(point, segmentPointA)
+	pointToSegB = diff(point, segmentPointB)
+	segAToSegB = diff(segmentPointA, segmentPointB)
+
+	return dot(pointToSegA, pointToSegA) + dot(pointToSegB, pointToSegB) - dot(segAToSegB, segAToSegB) < 0.001
+
+# return point on segment that intersects plane
+# or none if none can be found
+def intersect_segment_and_plane(segmentPointA, segmentPointB, planePoint, planeNormal):
+	segmentDirection = diff(segmentPointB, segmentPointA)
+
+	intersection = intersect_line_and_plane(segmentPointA, segmentDirection, planePoint, planeNormal)
+	
+	if intersection is None:
+		return None
+
+	if not colinear_point_on_segment(intersection, segmentPointA, segmentPointB):
+		return None
+
+	return intersection
+
+# assuming plane is axis-aligned and lies on planeIndex axis
+# returns point where the given line intersects the plane
+def intersect_line_and_plane(linePoint, lineDirection, planePoint, planeNormal):
+	lineToPlaneCosine = dot(lineDirection, planeNormal)
+
+	if lineToPlaneCosine == 0:
+		return None # coplanar
+
+	lineToPlane = diff(planePoint, linePoint)
+	
+	factorAlongLine = dot(lineToPlane, planeNormal) / lineToPlaneCosine
+
+	return add(linePoint, mult(lineDirection, factorAlongLine))

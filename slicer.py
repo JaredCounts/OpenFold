@@ -1,5 +1,7 @@
 from Slice import *
 
+from util import *
+
 import numpy
 from stl import mesh
 
@@ -31,7 +33,7 @@ def slice(stlFile, sliceDensity):
 		thisSlice = slice_on_plane(stlMesh, 1, y)
 		if thisSlice is not None:
 			slices.append(thisSlice)
-			
+
 	return slices
 
 
@@ -87,42 +89,3 @@ def slice_on_plane(stlMesh, planeIndex, planePosition):
 
 	return thisSlice
 
-# see if point is between the segment points
-def colinear_point_on_segment(point, segmentPointA, segmentPointB):
-	pointToSegA = diff(point, segmentPointA)
-	pointToSegB = diff(point, segmentPointB)
-	segAToSegB = diff(segmentPointA, segmentPointB)
-
-	return dot(pointToSegA, pointToSegA) + dot(pointToSegB, pointToSegB) - dot(segAToSegB, segAToSegB) < 0.001
-
-def intersect_segment_and_plane(segmentPointA, segmentPointB, planePoint, planeNormal):
-	segmentDirection = diff(segmentPointB, segmentPointA)
-
-
-	intersection = intersect_line_and_plane(segmentPointA, segmentDirection, planePoint, planeNormal)
-	
-	if intersection is None:
-		return None
-
-	if not colinear_point_on_segment(intersection, segmentPointA, segmentPointB):
-		return None
-
-	return intersection
-
-# assuming plane is axis-aligned and lies on planeIndex axis
-def intersect_line_and_plane(linePoint, lineDirection, planePoint, planeNormal):
-	lineToPlaneCosine = numpy.dot(lineDirection, planeNormal)
-
-	if lineToPlaneCosine == 0:
-		return None # coplanar
-
-	lineToPlane = diff(planePoint, linePoint)
-	
-	factorAlongLine = dot(lineToPlane, planeNormal) / lineToPlaneCosine
-
-	return add(linePoint, mult(lineDirection, factorAlongLine))
-
-
-# slices = slice('pug.stl', 1/10)
-# print(len(slices))
-# print(slices[0])
