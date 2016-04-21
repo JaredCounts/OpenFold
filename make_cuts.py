@@ -9,7 +9,7 @@ from util import *
 import svgwrite
 
 def make_cuts(stlFile, svgOutput):
-	sliceDensity = 1/10
+	sliceDensity = 5/10
 	print("SLICING")
 	slices = slice(stlFile, sliceDensity)
 
@@ -37,4 +37,7 @@ def make_cuts(stlFile, svgOutput):
 							stroke_width=2))
 	svg.save()
 
-make_cuts('heart.stl', 'heart.svg')
+make_cuts('stl-files/cube.stl', 'svg-files/cube.svg')
+make_cuts('stl-files/sphere.stl', 'svg-files/sphere.svg')
+make_cuts('stl-files/pug.stl', 'svg-files/pug.svg')
+make_cuts('stl-files/heart.stl', 'svg-files/heart.svg')
