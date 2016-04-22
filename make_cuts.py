@@ -36,7 +36,12 @@ def make_cuts(stlFile, svgOutput):
 		# add label
 		averagePosition = currentSlice.averagePosition()
 		textPosition = mult(add(averagePosition, offset), cutScalingFactor)
-		svg.add( svg.text('test', x=[textPosition[0]], y=[textPosition[1]]))
+		svg.add( 
+			svg.text(axisIndexToAxisStr(currentSlice.axisIndex()) + '=' + str(currentSlice.axis_position), 
+				x=[textPosition[0]], 
+				y=[textPosition[1]],
+				stroke=svgwrite.rgb(255, 0, 0, '%'),
+				fill=svgwrite.rgb(255, 0, 0, '%')))
 
 		# slice segments
 		renderSegments(svg, currentSlice.segments, offset, cutScalingFactor)
@@ -44,6 +49,17 @@ def make_cuts(stlFile, svgOutput):
 		renderSegments(svg, notches[currentSlice], offset, cutScalingFactor)
 
 	svg.save()
+
+def axisIndexToAxisStr(axisIndex):
+	if axisIndex == 0:
+		return 'X'
+	elif axisIndex == 1:
+		return 'Y'
+	elif axisIndex == 2:
+		return 'Z'
+	else:
+		print('invalid axis index', axisIndex)
+		assert False
 
 def renderSegments(svg, segments, offset, scale):
 	for segment in segments:
