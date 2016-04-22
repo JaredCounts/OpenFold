@@ -1,6 +1,7 @@
 from Slice import *
 
-from util import *
+from vector import *
+from intersect import *
 
 import numpy
 from stl import mesh

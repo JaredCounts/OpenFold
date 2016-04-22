@@ -1,4 +1,5 @@
-from util import *
+from vector import *
+from intersect import *
 
 class Slice(object):
 	def __init__(self):

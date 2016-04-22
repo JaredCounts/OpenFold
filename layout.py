@@ -1,4 +1,5 @@
-from util import *
+from vector import *
+
 # input: a list of slices
 # output:
 # 	a list of line segments

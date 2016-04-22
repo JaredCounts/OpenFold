@@ -3,13 +3,13 @@ from layout import *
 from slicer import *
 from flexurizer import *
 from test_slices import *
-from util import *
+from vector import *
 
 # https://pypi.python.org/pypi/svgwrite/
 import svgwrite
 
 def make_cuts(stlFile, svgOutput):
-	sliceDensity = 5/10
+	sliceDensity = 2/10
 	print("SLICING")
 	slices = slice(stlFile, sliceDensity)
 

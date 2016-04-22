@@ -1,5 +1,6 @@
 from test_slices import *
-from util import *
+from vector import *
+from intersect import *
 
 # input: list of slices
 # output: a dictionary of slices to line segments of where notches should be
