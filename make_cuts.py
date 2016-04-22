@@ -17,10 +17,10 @@ def make_cuts(stlFile, svgOutput):
 	notches = notch(slices)
 	# flexures = flexurize(slices)
 
-	for currentSlice in slices:
-	 	slice_notches = notches[currentSlice]
+	# for currentSlice in slices:
+	 	# slice_notches = notches[currentSlice]
 	 	# slice_flexures = flexures[slice]
-	 	currentSlice.segments.extend(slice_notches)
+	 	# currentSlice.segments.extend(slice_notches)
 	 	# slice.segments.extend(slice_flexures)
 
 	print("GENERATING LAYOUT")
@@ -32,13 +32,25 @@ def make_cuts(stlFile, svgOutput):
 	svg = svgwrite.Drawing(svgOutput, profile='tiny')
 	for currentSlice in slices:
 		offset = offsets[currentSlice]
-		for segment in currentSlice.segments:
-			svg.add(svg.line(	mult(add(segment[0], offset), cutScalingFactor), 
-								mult(add(segment[1], offset), cutScalingFactor), 
-								stroke=svgwrite.rgb(0, 0, 0, '%'), 
-								stroke_width=2))
+
+		# add label
+		averagePosition = currentSlice.averagePosition()
+		textPosition = mult(add(averagePosition, offset), cutScalingFactor)
+		svg.add( svg.text('test', x=[textPosition[0]], y=[textPosition[1]]))
+
+		# slice segments
+		renderSegments(svg, currentSlice.segments, offset, cutScalingFactor)
+		# notches
+		renderSegments(svg, notches[currentSlice], offset, cutScalingFactor)
 
 	svg.save()
+
+def renderSegments(svg, segments, offset, scale):
+	for segment in segments:
+			svg.add(svg.line(	mult(add(segment[0], offset), scale), 
+								mult(add(segment[1], offset), scale), 
+								stroke=svgwrite.rgb(0, 0, 0, '%'), 
+								stroke_width=2))
 
 make_cuts('stl-files/cube.stl', 'svg-files/cube.svg')
 # make_cuts('stl-files/sphere.stl', 'svg-files/sphere.svg')

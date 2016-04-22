@@ -7,6 +7,13 @@ class Slice(object):
 		self.axis_position = 0
 		self.segments = []
 
+	def averagePosition(self):
+		positionSum = (0,0)
+		for segment in self.segments:
+			positionSum = add(positionSum, segment[0])
+			positionSum = add(positionSum, segment[1])
+		return mult(positionSum, 1.0/(len(self.segments)*2))
+
 	# get index of axis this slice is perpendicular to
 	# eg, if it is perpendicular to (0,1,0), 
 	# 	then 1 is returned since the y axis is at index 1
