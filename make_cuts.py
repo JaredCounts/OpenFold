@@ -24,20 +24,23 @@ def make_cuts(stlFile, svgOutput):
 	 	# slice.segments.extend(slice_flexures)
 
 	print("GENERATING LAYOUT")
-	segments = layout(slices, 10, 400)
+	offsets = layout(slices, 10, 400)
 	
 	cutScalingFactor = 2
 
 	print("GENERATING SVG")
 	svg = svgwrite.Drawing(svgOutput, profile='tiny')
-	for segment in segments:
-		svg.add(svg.line(	mult(segment[0], cutScalingFactor), 
-							mult(segment[1], cutScalingFactor), 
-							stroke=svgwrite.rgb(0, 0, 0, '%'), 
-							stroke_width=2))
+	for currentSlice in slices:
+		offset = offsets[currentSlice]
+		for segment in currentSlice.segments:
+			svg.add(svg.line(	mult(add(segment[0], offset), cutScalingFactor), 
+								mult(add(segment[1], offset), cutScalingFactor), 
+								stroke=svgwrite.rgb(0, 0, 0, '%'), 
+								stroke_width=2))
+
 	svg.save()
 
 make_cuts('stl-files/cube.stl', 'svg-files/cube.svg')
-make_cuts('stl-files/sphere.stl', 'svg-files/sphere.svg')
-make_cuts('stl-files/pug.stl', 'svg-files/pug.svg')
-make_cuts('stl-files/heart.stl', 'svg-files/heart.svg')
+# make_cuts('stl-files/sphere.stl', 'svg-files/sphere.svg')
+# make_cuts('stl-files/pug.stl', 'svg-files/pug.svg')
+# make_cuts('stl-files/heart.stl', 'svg-files/heart.svg')

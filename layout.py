@@ -2,15 +2,17 @@ from vector import *
 
 # input: a list of slices
 # output:
-# 	a list of line segments
-# 	all in a single frame of reference
+# 	a dictionary keyed by slices and valued by their offset position
 def layout(slices, margin, canvasWidth):
+	sliceOffsets = {}
+
 	segments = []
 
 	offset = [margin,margin]
 	totalWidth = 0
 	layerMaxHeight = 0
 	for slice in slices:
+
 		minReach = min_from_segments(slice.segments)
 		maxReach = max_from_segments(slice.segments)
 		range = diff(maxReach, minReach)
@@ -24,14 +26,17 @@ def layout(slices, margin, canvasWidth):
 			offset[1] += layerMaxHeight + margin
 			totalWidth = margin
 
-		for segment in slice.segments:
-			pointA = add(diff(segment[0], minReach), offset)
-			pointB = add(diff(segment[1], minReach), offset)
-			segments.append( (pointA, pointB) )
+		sliceOffsets[slice] = diff(offset, minReach)
+
+		# for segment in slice.segments:
+		# 	pointA = add(diff(segment[0], minReach), offset)
+		# 	pointB = add(diff(segment[1], minReach), offset)
+		# 	segments.append( (pointA, pointB) )
 
 		offset[0] += range[0] + margin
 
-	return segments
+
+	return sliceOffsets
 
 def min_from_segments(segments):
 	minX = float("inf")
