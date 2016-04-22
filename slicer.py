@@ -25,6 +25,7 @@ def slice(stlFile, sliceDensity):
 		x = meshMin[0] + xPlane * meshRange[0] / int(sliceXCount)
 		thisSlice = slice_on_plane(stlMesh, 0, x)
 		if thisSlice is not None:
+			thisSlice.label = xPlane + 1
 			slices.append(thisSlice)
 
 	for yPlane in range(0, int(sliceYCount)):
@@ -33,6 +34,7 @@ def slice(stlFile, sliceDensity):
 
 		thisSlice = slice_on_plane(stlMesh, 1, y)
 		if thisSlice is not None:
+			thisSlice.label = yPlane + 1
 			slices.append(thisSlice)
 
 	return slices

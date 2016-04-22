@@ -6,6 +6,7 @@ class Slice(object):
 		self.axis = (1,0,0)
 		self.axis_position = 0
 		self.segments = []
+		self.label = 0
 
 	def averagePosition(self):
 		positionSum = (0,0)

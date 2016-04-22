@@ -37,7 +37,7 @@ def make_cuts(stlFile, svgOutput):
 		averagePosition = currentSlice.averagePosition()
 		textPosition = mult(add(averagePosition, offset), cutScalingFactor)
 		svg.add( 
-			svg.text(axisIndexToAxisStr(currentSlice.axisIndex()) + '=' + str(currentSlice.axis_position), 
+			svg.text(axisIndexToAxisStr(currentSlice.axisIndex()) + '=' + str(currentSlice.label), 
 				x=[textPosition[0]], 
 				y=[textPosition[1]],
 				stroke=svgwrite.rgb(255, 0, 0, '%'),
