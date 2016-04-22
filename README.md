@@ -18,20 +18,17 @@ To use, call `make_cuts(stlFile, svgOutput)` where `stlFile` is the file path to
 * Lovepop style notching (alternating sides)
 
 ### BUGS
-* Slicer missing axis aligned segments.
+* Slicer skipping axis aligned segments.
 * Slices at origin getting skipped by slicer.
 * Overlapping shapes on layout
 * Notches skipped when there's an odd number of intersections
 
 ### CODE
-* Separate vector operations from util.py
-	* Or maybe just use numpy?
-* Separate intersection stuff from util.py
-	* intersect.py or something
 * Rename 'index' to 'axis' when referring to specific vector coefficients to be more clear
 * Folders - eg. /pipeline, /math, etc
 * Consistent naming (instead of sometimes using camel casing and sometimes using '_')
 	* http://stackoverflow.com/a/159745/6153561
+* Just use numpy for vectors, maybe?
 
 ## References
 * [The Creation of V-fold Animal Pop-Up Cards from 3D Models Using a Directed Acyclic Graph](http://link.springer.com/chapter/10.1007%2F978-3-642-35473-1_47)
