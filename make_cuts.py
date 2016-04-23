@@ -9,7 +9,7 @@ from vector import *
 import svgwrite
 
 def make_cuts(stlFile, svgOutput):
-	sliceDensity = 2/20
+	sliceDensity = 3/20
 	print("SLICING")
 	slices = slice(stlFile, sliceDensity)
 
@@ -77,7 +77,9 @@ def renderSegments(svg, segments, offset, scale):
 								stroke=svgwrite.rgb(0, 0, 0, '%'), 
 								stroke_width=2))
 
-make_cuts('stl-files/cube.stl', 'svg-files/cube.svg')
+# make_cuts('stl-files/cube.stl', 'svg-files/cube.svg')
+# make_cuts('stl-files/rhino.stl', 'svg-files/rhino.svg')
+make_cuts('stl-files/bunny.stl', 'svg-files/bunny.svg')
 # make_cuts('stl-files/sphere.stl', 'svg-files/sphere.svg')
 # make_cuts('stl-files/pug.stl', 'svg-files/pug.svg')
 # make_cuts('stl-files/heart.stl', 'svg-files/heart.svg')
