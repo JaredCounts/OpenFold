@@ -83,8 +83,8 @@ def min_from_segments(segments):
 		pointB = segment[1]
 		minX = min(minX, pointA[0])
 		minX = min(minX, pointB[0])
-		minY = min(minY, pointA[0])
-		minY = min(minY, pointB[0])
+		minY = min(minY, pointA[1])
+		minY = min(minY, pointB[1])
 
 	return (minX, minY)
 
@@ -97,7 +97,7 @@ def max_from_segments(segments):
 		pointB = segment[1]
 		maxX = max(maxX, pointA[0])
 		maxX = max(maxX, pointB[0])
-		maxY = max(maxY, pointA[0])
-		maxY = max(maxY, pointB[0])
+		maxY = max(maxY, pointA[1])
+		maxY = max(maxY, pointB[1])
 
 	return (maxX, maxY)
