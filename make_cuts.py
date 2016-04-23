@@ -34,7 +34,7 @@ def make_cuts(stlFile, svgOutput):
 
 		svg.add( 
 			svg.text(
-				axisIndexToAxisStr(currentSlice.axisIndex()) + '=' + str(currentSlice.label), 
+				axisIndexToAxisStr(currentSlice.axisIndex()) + str(currentSlice.label), 
 				insert=(textPosition[0],textPosition[1]),
 				text_anchor='middle',
 				font_family="Verdana",
