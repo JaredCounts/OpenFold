@@ -29,6 +29,8 @@ To use, call `make_cuts(stlFile, svgOutput)` where `stlFile` is the file path to
 * Consistent naming (instead of sometimes using camel casing and sometimes using '_')
 	* http://stackoverflow.com/a/159745/6153561
 * Just use numpy for vectors, maybe?
+* Get rid of cutScalingFactor
+* Better transformation engine (ie. so we don't have to add offset every time in make_cuts)
 
 ## References
 * [The Creation of V-fold Animal Pop-Up Cards from 3D Models Using a Directed Acyclic Graph](http://link.springer.com/chapter/10.1007%2F978-3-642-35473-1_47)
