@@ -21,7 +21,7 @@ def slice(stlFile, sliceDensity):
 	slices = []
 
 	for xPlane in range(0, int(sliceXCount)):
-		print('on x: slicing', xPlane, 'out of', int(sliceXCount))
+		print('on x: slicing', xPlane+1, 'out of', int(sliceXCount))
 		x = meshMin[0] + xPlane * meshRange[0] / int(sliceXCount)
 		thisSlice = slice_on_plane(stlMesh, 0, x)
 		if thisSlice is not None:
@@ -29,7 +29,7 @@ def slice(stlFile, sliceDensity):
 			slices.append(thisSlice)
 
 	for yPlane in range(0, int(sliceYCount)):
-		print('on y: slicing', yPlane, 'out of', int(sliceYCount))
+		print('on y: slicing', yPlane+1, 'out of', int(sliceYCount))
 		y = meshMin[1] + yPlane * meshRange[1] / int(sliceYCount)
 
 		thisSlice = slice_on_plane(stlMesh, 1, y)
