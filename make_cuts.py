@@ -44,7 +44,6 @@ def make_cuts(stlFile, svgOutput):
 		# slice segments
 		renderSegments(svg, currentSlice.segments, offset, cutScalingFactor)
 		# notches
-		renderSegments(svg, notches[currentSlice], offset, cutScalingFactor)
 		for i in range(0,len(notches[currentSlice])):
 			currentNotch = notches[currentSlice][i]
 			label = notchLabels[currentSlice][i]
@@ -57,7 +56,8 @@ def make_cuts(stlFile, svgOutput):
 					font_family="Verdana",
 					font_size=10,
 					style="fill: #ff0000; width:1000px; color:red; font-weight:50;"))
-
+		renderSegments(svg, notches[currentSlice], offset, cutScalingFactor)
+		
 
 	svg.save()
 
