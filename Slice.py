@@ -8,6 +8,15 @@ class Slice(object):
 		self.segments = []
 		self.label = 0
 
+	def minPosition(self):
+		return min_from_segments(self.segments)
+
+	def maxPosition(self):
+		return max_from_segments(self.segments)
+
+	def size(self):
+		return diff(self.maxPosition(), self.minPosition())
+
 	def averagePosition(self):
 		positionSum = (0,0)
 		for segment in self.segments:
@@ -66,3 +75,29 @@ def vertical_index(sliceA, sliceB):
 		verticalIndex = 2
 	return verticalIndex
 
+def min_from_segments(segments):
+	minX = float("inf")
+	minY = float("inf")
+	for segment in segments:
+		pointA = segment[0]
+		pointB = segment[1]
+		minX = min(minX, pointA[0])
+		minX = min(minX, pointB[0])
+		minY = min(minY, pointA[0])
+		minY = min(minY, pointB[0])
+
+	return (minX, minY)
+
+def max_from_segments(segments):
+	maxX = -float("inf")
+	maxY = -float("inf")
+
+	for segment in segments:
+		pointA = segment[0]
+		pointB = segment[1]
+		maxX = max(maxX, pointA[0])
+		maxX = max(maxX, pointB[0])
+		maxY = max(maxY, pointA[0])
+		maxY = max(maxY, pointB[0])
+
+	return (maxX, maxY)
