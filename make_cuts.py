@@ -18,10 +18,10 @@ def make_cuts(stlFile, svgOutput):
 	(notches, notchLabels) = notch(slices)
 	# flexures = flexurize(slices)
 
+	cutScalingFactor = 1
 	print("GENERATING LAYOUT")
-	offsets = layout(slices, 10, 400)
+	offsets = layout(slices, cutScalingFactor*20, cutScalingFactor*800)
 	
-	cutScalingFactor = 2
 	print("GENERATING SVG")
 	svg = svgwrite.Drawing(svgOutput, profile='full')
 
@@ -38,7 +38,8 @@ def make_cuts(stlFile, svgOutput):
 				insert=(textPosition[0],textPosition[1]),
 				text_anchor='middle',
 				font_family="Verdana",
-				style="fill: #ff0000; width:1000px; color:red; text-size:15; font-weight:100;"))
+				font_size=12,
+				style="fill: #ff0000; width:1000px; color:red; font-weight:100;"))
 
 		# slice segments
 		renderSegments(svg, currentSlice.segments, offset, cutScalingFactor)
@@ -54,7 +55,8 @@ def make_cuts(stlFile, svgOutput):
 					insert=(position[0],position[1]),
 					text_anchor='middle',
 					font_family="Verdana",
-					style="fill: #ff0000; width:1000px; color:red; text-size:15; font-weight:100;"))
+					font_size=10,
+					style="fill: #ff0000; width:1000px; color:red; font-weight:50;"))
 
 
 	svg.save()
@@ -77,7 +79,7 @@ def renderSegments(svg, segments, offset, scale):
 								stroke=svgwrite.rgb(0, 0, 0, '%'), 
 								stroke_width=2))
 
-# make_cuts('stl-files/cube.stl', 'svg-files/cube.svg')
+make_cuts('stl-files/cube.stl', 'svg-files/cube.svg')
 # make_cuts('stl-files/rhino.stl', 'svg-files/rhino.svg')
 make_cuts('stl-files/bunny.stl', 'svg-files/bunny.svg')
 # make_cuts('stl-files/sphere.stl', 'svg-files/sphere.svg')
