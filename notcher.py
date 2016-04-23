@@ -3,7 +3,11 @@ from vector import *
 from intersect import *
 
 # input: list of slices
-# output: a dictionary of slices to line segments of where notches should be
+# output: 
+#  a tuple such that
+#  	the first element is a dictionary keyed by slices valued to list of line segments of where notches should be
+#   the second is a dictionary keyed by slices valued 
+# 		to a list with labels (whose indices match notch indices for that slice)
 def notch(slices):
 	if len(slices) == 0:
 		return {}
@@ -12,6 +16,7 @@ def notch(slices):
 	referenceAxis = slices[0].axis
 
 	notches = {}
+	labels = {}
 	for sliceA in slices:
 		# we do every slice pair such that sliceA is on the referenceAxis and sliceB is on the other axis
 		if sliceA.axis != referenceAxis:
@@ -19,6 +24,7 @@ def notch(slices):
 
 		if sliceA not in notches:
 			notches[sliceA] = []
+			labels[sliceA] = []
 
 		for sliceB in slices:
 			# sliceA won't intersect with sliceB if they're on the same axis
@@ -27,6 +33,7 @@ def notch(slices):
 
 			if sliceB not in notches:
 				notches[sliceB] = []
+				labels[sliceB] = []
 
 			# sliceA == the slice with the axis matching the reference axis
 			# this way we can ensure we always notch from the same side for slices with the same axis
@@ -49,14 +56,18 @@ def notch(slices):
 				sliceAIntersectionA = sliceAIntersections[i]
 				sliceAIntersectionB = sliceAIntersections[i+1]
 				sliceAMidPoint = mult(add(sliceAIntersectionA, sliceAIntersectionB), 0.5)
-				notches[sliceA].append( (sliceAIntersectionA, sliceAMidPoint) )
+				sliceANotch = (sliceAIntersectionA, sliceAMidPoint)
+				notches[sliceA].append( sliceANotch )
+				labels[sliceA].append(sliceB.label)
 
 				sliceBIntersectionA = sliceBIntersections[i]
 				sliceBIntersectionB = sliceBIntersections[i+1]
 				sliceBMidPoint = mult(add(sliceBIntersectionA, sliceBIntersectionB), 0.5)
-				notches[sliceB].append( (sliceBMidPoint, sliceBIntersectionB) )
+				sliceBNotch = (sliceBMidPoint, sliceBIntersectionB)
+				notches[sliceB].append( sliceBNotch )
+				labels[sliceB].append(sliceA.label)
 
-	return notches
+	return (notches, labels)
 
 
 # simple test

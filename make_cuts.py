@@ -9,12 +9,13 @@ from vector import *
 import svgwrite
 
 def make_cuts(stlFile, svgOutput):
-	sliceDensity = 1/10
+	sliceDensity = 2/20
 	print("SLICING")
 	slices = slice(stlFile, sliceDensity)
 
 	print("GENERATING NOTCHES")
-	notches = notch(slices)
+
+	(notches, notchLabels) = notch(slices)
 	# flexures = flexurize(slices)
 
 	print("GENERATING LAYOUT")
@@ -43,6 +44,19 @@ def make_cuts(stlFile, svgOutput):
 		renderSegments(svg, currentSlice.segments, offset, cutScalingFactor)
 		# notches
 		renderSegments(svg, notches[currentSlice], offset, cutScalingFactor)
+		for i in range(0,len(notches[currentSlice])):
+			currentNotch = notches[currentSlice][i]
+			label = notchLabels[currentSlice][i]
+			position = mult(add(mult(add(currentNotch[0], currentNotch[1]), 0.5), offset), cutScalingFactor)
+			svg.add( 
+				svg.text(
+					label, 
+					insert=(position[0],position[1]),
+					text_anchor='middle',
+					font_family="Verdana",
+					style="fill: #ff0000; width:1000px; color:red; text-size:15; font-weight:100;"))
+
+
 	svg.save()
 
 def axisIndexToAxisStr(axisIndex):
@@ -64,6 +78,6 @@ def renderSegments(svg, segments, offset, scale):
 								stroke_width=2))
 
 make_cuts('stl-files/cube.stl', 'svg-files/cube.svg')
-make_cuts('stl-files/sphere.stl', 'svg-files/sphere.svg')
-make_cuts('stl-files/pug.stl', 'svg-files/pug.svg')
+# make_cuts('stl-files/sphere.stl', 'svg-files/sphere.svg')
+# make_cuts('stl-files/pug.stl', 'svg-files/pug.svg')
 # make_cuts('stl-files/heart.stl', 'svg-files/heart.svg')
