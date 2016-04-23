@@ -9,7 +9,7 @@ from vector import *
 import svgwrite
 
 def make_cuts(stlFile, svgOutput):
-	sliceDensity = 2/10
+	sliceDensity = 1/10
 	print("SLICING")
 	slices = slice(stlFile, sliceDensity)
 
@@ -17,37 +17,32 @@ def make_cuts(stlFile, svgOutput):
 	notches = notch(slices)
 	# flexures = flexurize(slices)
 
-	# for currentSlice in slices:
-	 	# slice_notches = notches[currentSlice]
-	 	# slice_flexures = flexures[slice]
-	 	# currentSlice.segments.extend(slice_notches)
-	 	# slice.segments.extend(slice_flexures)
-
 	print("GENERATING LAYOUT")
 	offsets = layout(slices, 10, 400)
 	
 	cutScalingFactor = 2
-
 	print("GENERATING SVG")
-	svg = svgwrite.Drawing(svgOutput, profile='tiny')
+	svg = svgwrite.Drawing(svgOutput, profile='full')
+
 	for currentSlice in slices:
 		offset = offsets[currentSlice]
 
 		# add label
 		averagePosition = currentSlice.averagePosition()
 		textPosition = mult(add(averagePosition, offset), cutScalingFactor)
+
 		svg.add( 
-			svg.text(axisIndexToAxisStr(currentSlice.axisIndex()) + '=' + str(currentSlice.label), 
-				x=[textPosition[0]], 
-				y=[textPosition[1]],
-				stroke=svgwrite.rgb(255, 0, 0, '%'),
-				fill=svgwrite.rgb(255, 0, 0, '%')))
+			svg.text(
+				axisIndexToAxisStr(currentSlice.axisIndex()) + '=' + str(currentSlice.label), 
+				insert=(textPosition[0],textPosition[1]),
+				text_anchor='middle',
+				font_family="Verdana",
+				style="fill: #ff0000; width:1000px; color:red; text-size:15; font-weight:100;"))
 
 		# slice segments
 		renderSegments(svg, currentSlice.segments, offset, cutScalingFactor)
 		# notches
 		renderSegments(svg, notches[currentSlice], offset, cutScalingFactor)
-
 	svg.save()
 
 def axisIndexToAxisStr(axisIndex):
@@ -69,6 +64,6 @@ def renderSegments(svg, segments, offset, scale):
 								stroke_width=2))
 
 make_cuts('stl-files/cube.stl', 'svg-files/cube.svg')
-# make_cuts('stl-files/sphere.stl', 'svg-files/sphere.svg')
-# make_cuts('stl-files/pug.stl', 'svg-files/pug.svg')
+make_cuts('stl-files/sphere.stl', 'svg-files/sphere.svg')
+make_cuts('stl-files/pug.stl', 'svg-files/pug.svg')
 # make_cuts('stl-files/heart.stl', 'svg-files/heart.svg')
