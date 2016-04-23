@@ -55,6 +55,8 @@ def slice_on_plane(stlMesh, planeIndex, planePosition):
 		if v0[planeIndex] > planePosition and v1[planeIndex] > planePosition and v2[planeIndex] > planePosition:
 			continue
 		if v0[planeIndex] == planePosition and v1[planeIndex] == planePosition and v2[planeIndex] == planePosition:
+			# TODO - these points are all coplanar with the slice points
+			# so which segments do we add, if any?
 			continue
 
 		planePoint = [0,0,0]

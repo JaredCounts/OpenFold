@@ -18,6 +18,7 @@ To use, call `make_cuts(stlFile, svgOutput)` where `stlFile` is the file path to
 
 ### BUGS
 * Slicer skipping axis aligned segments.
+* If a whole triangle is on a slice, which segments from it do we add, if any?
 * Slices at origin getting skipped by slicer.
 * Overlapping shapes on layout
 * Notches skipped when there's an odd number of intersections
