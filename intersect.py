@@ -32,9 +32,11 @@ def ray_segment_intersect_2D(segment, origin, direction):
 # if no intersection is found, None is returned
 def ray_cast_2D(segments, origin, direction):
 	intersectionTList = []
+	tSet = set()
 	for segment in segments:
 		t = ray_segment_intersect_2D(segment, origin, direction)
-		if t is not None:
+		if t is not None and t not in tSet:
+			tSet.add(t)
 			intersectionTList.append(t)
 
 	if len(intersectionTList) == 0:
