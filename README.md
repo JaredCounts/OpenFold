@@ -16,6 +16,9 @@ To use, call `make_cuts(stlFile, svgOutput)` where `stlFile` is the file path to
 * Improved layout engine (better packing)
 * Lovepop style notching (alternating sides)
 
+## OPTIMIZATIONS
+* Data structures could improve intersection tests
+
 ### BUGS
 * Slicer skipping axis aligned segments.
 * If a whole triangle is on a slice, which segments from it do we add, if any?
