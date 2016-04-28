@@ -8,7 +8,6 @@ To use, call `make_cuts(stlFile, svgOutput)` where `stlFile` is the file path to
 ## TODO
 ### FEATURES
 * Come up with a neat project name
-* Flexurizer
 * Slice and model rendering
 * Interactive UI
 * Parameterize notch size, flexure size, densities, etc

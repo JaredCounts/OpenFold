@@ -9,14 +9,15 @@ from vector import *
 import svgwrite
 
 def make_cuts(stlFile, svgOutput):
-	sliceDensity = 3/20
+	sliceDensity = 1/20
 	print("SLICING")
 	slices = slice(stlFile, sliceDensity)
 
 	print("GENERATING NOTCHES")
-
 	(notches, notchLabels) = notch(slices)
-	# flexures = flexurize(slices)
+	
+	print("GENERATING FLEXURES")
+	flexures = flexurize(slices)
 
 	cutScalingFactor = 1
 	print("GENERATING LAYOUT")
@@ -41,9 +42,8 @@ def make_cuts(stlFile, svgOutput):
 				font_size=12,
 				style="fill: #ff0000; width:1000px; color:red; font-weight:100;"))
 
-		# slice segments
-		renderSegments(svg, currentSlice.segments, offset, cutScalingFactor)
-		# notches
+
+		# notch labels
 		for i in range(0,len(notches[currentSlice])):
 			currentNotch = notches[currentSlice][i]
 			label = notchLabels[currentSlice][i]
@@ -56,7 +56,14 @@ def make_cuts(stlFile, svgOutput):
 					font_family="Verdana",
 					font_size=10,
 					style="fill: #ff0000; width:1000px; color:red; font-weight:50;"))
+		# notches
 		renderSegments(svg, notches[currentSlice], offset, cutScalingFactor)
+		
+		# flexures
+		renderSegments(svg, flexures[currentSlice], offset, cutScalingFactor)
+		
+		# slice segments
+		renderSegments(svg, currentSlice.segments, offset, cutScalingFactor)
 		
 
 	svg.save()
@@ -79,10 +86,10 @@ def renderSegments(svg, segments, offset, scale):
 								stroke=svgwrite.rgb(0, 0, 0, '%'), 
 								stroke_width=2))
 
-make_cuts('stl-files/cube.stl', 'svg-files/cube.svg')
+# make_cuts('stl-files/cube.stl', 'svg-files/cube.svg')
 make_cuts('stl-files/chair.stl', 'svg-files/chair.svg') # http://www.thingiverse.com/thing:141703
 # make_cuts('stl-files/rhino.stl', 'svg-files/rhino.svg')
-make_cuts('stl-files/bunny.stl', 'svg-files/bunny.svg')
+# make_cuts('stl-files/bunny.stl', 'svg-files/bunny.svg')
 # make_cuts('stl-files/sphere.stl', 'svg-files/sphere.svg')
 # make_cuts('stl-files/pug.stl', 'svg-files/pug.svg')
 # make_cuts('stl-files/heart.stl', 'svg-files/heart.svg')
