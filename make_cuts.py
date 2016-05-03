@@ -84,7 +84,8 @@ def renderSegments(svg, segments, offset, scale):
 			svg.add(svg.line(	mult(add(segment[0], offset), scale), 
 								mult(add(segment[1], offset), scale), 
 								stroke=svgwrite.rgb(0, 0, 0, '%'), 
-								stroke_width=2))
+								stroke_width=2,
+								stroke_linecap="square"))
 
 # make_cuts('stl-files/cube.stl', 'svg-files/cube.svg')
 make_cuts('stl-files/chair.stl', 'svg-files/chair.svg') # http://www.thingiverse.com/thing:141703
