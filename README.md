@@ -24,6 +24,7 @@ To use, call `make_cuts(stlFile, svgOutput)` where `stlFile` is the file path to
 * Slices at origin getting skipped by slicer.
 * Overlapping shapes on layout
 * Notches skipped when there's an odd number of intersections
+* Segments are duplicated?
 
 ### CODE
 * Rename 'index' to 'axis' when referring to specific vector coefficients to be more clear
