@@ -7,6 +7,7 @@ from vector import *
 
 # https://pypi.python.org/pypi/svgwrite/
 import svgwrite
+import sys
 
 def make_cuts(stlFile, svgOutput):
 	sliceDensity = 1/20
@@ -87,8 +88,16 @@ def renderSegments(svg, segments, offset, scale):
 								stroke_width=2,
 								stroke_linecap="square"))
 
+if len(sys.argv) != 3:
+	print("Usage: python make_cuts.py stl_file_path svg_output_file_path")
+else:
+	stlFile = sys.argv[1]
+	svgOutput = sys.argv[2]
+	make_cuts(stlFile, svgOutput)
+
+
 # make_cuts('stl-files/cube.stl', 'svg-files/cube.svg')
-make_cuts('stl-files/chair.stl', 'svg-files/chair.svg') # http://www.thingiverse.com/thing:141703
+# make_cuts('stl-files/chair.stl', 'svg-files/chair.svg') # http://www.thingiverse.com/thing:141703
 # make_cuts('stl-files/rhino.stl', 'svg-files/rhino.svg')
 # make_cuts('stl-files/bunny.stl', 'svg-files/bunny.svg')
 # make_cuts('stl-files/sphere.stl', 'svg-files/sphere.svg')
