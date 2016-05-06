@@ -10,7 +10,7 @@ import svgwrite
 import sys
 
 def make_cuts(stlFile, svgOutput):
-	sliceDensity = 1/20
+	sliceDensity = 2/20
 	print("SLICING")
 	slices = slice(stlFile, sliceDensity)
 
@@ -58,7 +58,7 @@ def make_cuts(stlFile, svgOutput):
 					font_size=10,
 					style="fill: #ff0000; width:1000px; color:red; font-weight:50;"))
 		# notches
-		renderSegments(svg, notches[currentSlice], offset, cutScalingFactor)
+		renderRects(svg, notches[currentSlice], offset, cutScalingFactor)
 		
 		# flexures
 		renderSegments(svg, flexures[currentSlice], offset, cutScalingFactor)
@@ -80,12 +80,23 @@ def axisIndexToAxisStr(axisIndex):
 		print('invalid axis index', axisIndex)
 		assert False
 
+def renderRects(svg, segments, offset, scale):
+	width = 3
+	for segment in segments:
+		size = diff(segment[1], segment[0])
+		if size[0] == 0:
+			size[0] = width
+		if size[1] == 0:
+			size[1] = width
+		svg.add(svg.rect(insert=(mult(add(segment[0], offset), scale)), 
+						 size=size))
+
 def renderSegments(svg, segments, offset, scale):
 	for segment in segments:
 			svg.add(svg.line(	mult(add(segment[0], offset), scale), 
 								mult(add(segment[1], offset), scale), 
 								stroke=svgwrite.rgb(0, 0, 0, '%'), 
-								stroke_width=2,
+								stroke_width=1,
 								stroke_linecap="square"))
 
 if len(sys.argv) != 3:
@@ -94,7 +105,6 @@ else:
 	stlFile = sys.argv[1]
 	svgOutput = sys.argv[2]
 	make_cuts(stlFile, svgOutput)
-
 
 # make_cuts('stl-files/cube.stl', 'svg-files/cube.svg')
 # make_cuts('stl-files/chair.stl', 'svg-files/chair.svg') # http://www.thingiverse.com/thing:141703
