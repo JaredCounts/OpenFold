@@ -8,7 +8,7 @@ def layout(slices, margin, canvasWidth):
 
 	segments = []
 
-	offset = [margin,margin]
+	offset = [margin/2,margin/2]
 	totalWidth = 0
 	layerMaxHeight = 0
 	for slice in slices:
