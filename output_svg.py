@@ -40,7 +40,7 @@ def output_svg(svgOutput, slices, notches, notchLabels, material_thickness, flex
 		renderRects(svg, notches[currentSlice], offset, material_thickness)
 		
 		# flexures
-		renderSegments(svg, flexures[currentSlice], offset)
+		renderRects(svg, flexures[currentSlice], offset, material_thickness)
 		
 		# slice segments
 		renderSegments(svg, currentSlice.segments, offset)
