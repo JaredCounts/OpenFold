@@ -9,9 +9,9 @@ from intersect import *
 def flexurize(slices):
 	flexures = {}
 
-	flexureToNotchGap = 4
+	flexureToNotchGap = 2
 	flexureDensity = 0.5
-	flexureToEdgeGap = 8
+	flexureToEdgeGap = 10
 	minEdgeToEdgeDistance = 15
 
 	for sliceA in slices:
