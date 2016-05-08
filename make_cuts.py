@@ -5,13 +5,15 @@ from flexurizer import *
 from test_slices import *
 from vector import *
 from output_svg import *
+from read_ini import *
 import sys
 
-def make_cuts(stlFile, svgOutput):
-	sliceDensity = 2/20
+def make_cuts(stlFile, svgOutput, iniParamsFile):
+	params = get_params(iniParamsFile)
 
-	stl_scale = 0.5
-	notch_width = 3
+	sliceDensity = params['slice_density']
+	stl_scale = params['stl_scale']
+	material_thickness = params['material_thickness']
 
 	print("SLICING")
 	slices = slice(stlFile, sliceDensity, stl_scale)
@@ -20,20 +22,21 @@ def make_cuts(stlFile, svgOutput):
 	(notches, notchLabels) = notch(slices)
 	
 	print("GENERATING FLEXURES")
-	flexures = flexurize(slices)
+	flexures = flexurize(slices, material_thickness)
 
 	print("GENERATING LAYOUT")
 	offsets = layout(slices, 5, 600)
 	
 	print("GENERATING SVG")
-	output_svg(svgOutput, slices, notches, notchLabels, notch_width, flexures, offsets)
+	output_svg(svgOutput, slices, notches, notchLabels, material_thickness, flexures, offsets)
 
-if len(sys.argv) != 3:
-	print("Usage: python make_cuts.py stl_file_path svg_output_file_path")
+if len(sys.argv) != 4:
+	print("Usage: python make_cuts.py stl_file_path svg_output_file_path ini_param_file_path")
 else:
 	stlFile = sys.argv[1]
 	svgOutput = sys.argv[2]
-	make_cuts(stlFile, svgOutput)
+	iniFile = sys.argv[3]
+	make_cuts(stlFile, svgOutput, iniFile)
 
 # make_cuts('stl-files/cube.stl', 'svg-files/cube.svg')
 # make_cuts('stl-files/chair.stl', 'svg-files/chair.svg') # http://www.thingiverse.com/thing:141703

@@ -6,13 +6,15 @@ from intersect import *
 # output:
 # 	a dictionary keyed by slices valued to list of line segments of where flexures should be
 
-def flexurize(slices):
+def flexurize(slices, material_thickness):
 	flexures = {}
 
-	flexureToNotchGap = 2
-	flexureDensity = 0.5
-	flexureToEdgeGap = 10
-	minEdgeToEdgeDistance = 15
+	flexureToNotchGap = material_thickness
+	flexureToFlexureGap = material_thickness
+	flexureWidth = material_thickness
+	flexureDensity = 1 / (flexureToFlexureGap + flexureWidth)
+	flexureToEdgeGap = material_thickness
+	minEdgeToEdgeDistance = flexureToEdgeGap * 2
 
 	for sliceA in slices:
 		flexures[sliceA] = []
