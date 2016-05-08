@@ -13,10 +13,11 @@ def make_cuts(stlFile, svgOutput):
 	sliceDensity = 2/20
 
 	stl_scale = 0.5
+	notch_width = 3
 
 	print("SLICING")
 	slices = slice(stlFile, sliceDensity, stl_scale)
-
+	
 	print("GENERATING NOTCHES")
 	(notches, notchLabels) = notch(slices)
 	
@@ -24,7 +25,7 @@ def make_cuts(stlFile, svgOutput):
 	flexures = flexurize(slices)
 
 	print("GENERATING LAYOUT")
-	offsets = layout(slices, 20, 800)
+	offsets = layout(slices, 5, 600)
 	
 	print("GENERATING SVG")
 	svg = svgwrite.Drawing(svgOutput, profile='full')
@@ -60,7 +61,7 @@ def make_cuts(stlFile, svgOutput):
 					font_size=10,
 					style="fill: #ff0000; width:1000px; color:red; font-weight:50;"))
 		# notches
-		renderRects(svg, notches[currentSlice], offset)
+		renderRects(svg, notches[currentSlice], offset, notch_width)
 		
 		# flexures
 		renderSegments(svg, flexures[currentSlice], offset)
@@ -82,7 +83,7 @@ def axisIndexToAxisStr(axisIndex):
 		print('invalid axis index', axisIndex)
 		assert False
 
-def renderRects(svg, segments, offset):
+def renderRects(svg, segments, offset, width):
 	width = 3
 	for segment in segments:
 		size = diff(segment[1], segment[0])
