@@ -9,7 +9,7 @@ from intersect import *
 def flexurize(slices, material_thickness):
 	flexures = {}
 
-	flexureToNotchGap = material_thickness
+	flexureToNotchGap = material_thickness * 2
 	flexureToFlexureGap = material_thickness
 	flexureWidth = material_thickness
 	flexureDensity = 1 / (flexureToFlexureGap + flexureWidth)
