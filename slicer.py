@@ -6,8 +6,9 @@ from intersect import *
 import numpy
 from stl import mesh
 
-def slice(stlFile, sliceDensity):
+def slice(stlFile, sliceDensity, stl_scale):
 	stlMesh = mesh.Mesh.from_file(stlFile)
+	stlMesh.data['vectors'] *= stl_scale
 	
 	meshMin = stlMesh.min_
 	meshMax = stlMesh.max_

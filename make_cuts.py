@@ -11,8 +11,11 @@ import sys
 
 def make_cuts(stlFile, svgOutput):
 	sliceDensity = 2/20
+
+	stl_scale = 0.5
+
 	print("SLICING")
-	slices = slice(stlFile, sliceDensity)
+	slices = slice(stlFile, sliceDensity, stl_scale)
 
 	print("GENERATING NOTCHES")
 	(notches, notchLabels) = notch(slices)
@@ -20,9 +23,8 @@ def make_cuts(stlFile, svgOutput):
 	print("GENERATING FLEXURES")
 	flexures = flexurize(slices)
 
-	cutScalingFactor = 1
 	print("GENERATING LAYOUT")
-	offsets = layout(slices, cutScalingFactor*20, cutScalingFactor*800)
+	offsets = layout(slices, 20, 800)
 	
 	print("GENERATING SVG")
 	svg = svgwrite.Drawing(svgOutput, profile='full')
@@ -32,7 +34,7 @@ def make_cuts(stlFile, svgOutput):
 
 		# add label
 		averagePosition = currentSlice.averagePosition()
-		textPosition = mult(add(averagePosition, offset), cutScalingFactor)
+		textPosition = add(averagePosition, offset)
 
 		svg.add( 
 			svg.text(
@@ -48,7 +50,7 @@ def make_cuts(stlFile, svgOutput):
 		for i in range(0,len(notches[currentSlice])):
 			currentNotch = notches[currentSlice][i]
 			label = notchLabels[currentSlice][i]
-			position = mult(add(mult(add(currentNotch[0], currentNotch[1]), 0.5), offset), cutScalingFactor)
+			position = add(mult(add(currentNotch[0], currentNotch[1]), 0.5), offset)
 			svg.add( 
 				svg.text(
 					label, 
@@ -58,13 +60,13 @@ def make_cuts(stlFile, svgOutput):
 					font_size=10,
 					style="fill: #ff0000; width:1000px; color:red; font-weight:50;"))
 		# notches
-		renderRects(svg, notches[currentSlice], offset, cutScalingFactor)
+		renderRects(svg, notches[currentSlice], offset)
 		
 		# flexures
-		renderSegments(svg, flexures[currentSlice], offset, cutScalingFactor)
+		renderSegments(svg, flexures[currentSlice], offset)
 		
 		# slice segments
-		renderSegments(svg, currentSlice.segments, offset, cutScalingFactor)
+		renderSegments(svg, currentSlice.segments, offset)
 		
 
 	svg.save()
@@ -80,24 +82,27 @@ def axisIndexToAxisStr(axisIndex):
 		print('invalid axis index', axisIndex)
 		assert False
 
-def renderRects(svg, segments, offset, scale):
+def renderRects(svg, segments, offset):
 	width = 3
 	for segment in segments:
 		size = diff(segment[1], segment[0])
+		centering = [0,0]
 		if size[0] == 0:
 			size[0] = width
+			centering[0] = -width/2
 		if size[1] == 0:
 			size[1] = width
-		svg.add(svg.rect(insert=(mult(add(segment[0], offset), scale)), 
+			centering[1] = -width/2
+		svg.add(svg.rect(insert=(add(add(segment[0], centering), offset)), 
 						 size=size))
 
-def renderSegments(svg, segments, offset, scale):
+def renderSegments(svg, segments, offset):
 	for segment in segments:
-			svg.add(svg.line(	mult(add(segment[0], offset), scale), 
-								mult(add(segment[1], offset), scale), 
-								stroke=svgwrite.rgb(0, 0, 0, '%'), 
-								stroke_width=1,
-								stroke_linecap="square"))
+			svg.add(svg.line(add(segment[0], offset), 
+							 add(segment[1], offset), 
+							 stroke=svgwrite.rgb(0, 0, 0, '%'), 
+							 stroke_width=1,
+							 stroke_linecap="square"))
 
 if len(sys.argv) != 3:
 	print("Usage: python make_cuts.py stl_file_path svg_output_file_path")
