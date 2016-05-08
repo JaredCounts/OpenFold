@@ -45,8 +45,8 @@ def output_svg(svgOutput, slices, notches, notchLabels, material_thickness, flex
 		# slice segments
 		renderSegments(svg, currentSlice.segments, offset)
 		
-
 	svg.save()
+
 def axisIndexToAxisStr(axisIndex):
 	if axisIndex == 0:
 		return 'X'
@@ -59,7 +59,6 @@ def axisIndexToAxisStr(axisIndex):
 		assert False
 
 def renderRects(svg, segments, offset, width):
-	width = 3
 	for segment in segments:
 		size = diff(segment[1], segment[0])
 		centering = [0,0]
