@@ -13,7 +13,7 @@ def flexurize(slices, material_thickness):
 	flexureToFlexureGap = material_thickness
 	flexureWidth = material_thickness
 	flexureDensity = 1 / (flexureToFlexureGap + flexureWidth)
-	flexureToEdgeGap = material_thickness
+	flexureToEdgeGap = 2 * material_thickness
 	minEdgeToEdgeDistance = flexureToEdgeGap * 2
 
 	for sliceA in slices:
