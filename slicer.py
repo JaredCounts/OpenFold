@@ -21,17 +21,19 @@ def slice(stlFile, sliceDensity, stl_scale):
 
 	slices = []
 
+	xInterval = meshRange[0] / int(sliceXCount)
 	for xPlane in range(0, int(sliceXCount)):
 		print('on x: slicing', xPlane+1, 'out of', int(sliceXCount))
-		x = meshMin[0] + xPlane * meshRange[0] / int(sliceXCount)
+		x = meshMin[0] + xInterval/2 + xPlane * xInterval
 		thisSlice = slice_on_plane(stlMesh, 0, x)
 		if thisSlice is not None:
 			thisSlice.label = xPlane + 1
 			slices.append(thisSlice)
 
+	yInterval = meshRange[1] / int(sliceYCount)
 	for yPlane in range(0, int(sliceYCount)):
 		print('on y: slicing', yPlane+1, 'out of', int(sliceYCount))
-		y = meshMin[1] + yPlane * meshRange[1] / int(sliceYCount)
+		y = meshMin[1] + yInterval / 2 + yPlane * yInterval
 
 		thisSlice = slice_on_plane(stlMesh, 1, y)
 		if thisSlice is not None:
