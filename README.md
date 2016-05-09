@@ -4,6 +4,7 @@ Jared, Hunmin, and Anne
 
 ## Instructions
 From command line or terminal, type `python make_cuts.py input.stl output.svg params.ini`
+
 This will generate a svg file of cuts generated from the stl file using parameters from params.ini.
 
 ## TODO
