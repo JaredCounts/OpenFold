@@ -20,4 +20,7 @@ def get_params(ini_file):
 	
 	params['slice_density'] = config.getfloat('slicer', 'slices_per_mm')
 
+	params['layout_margin'] = config.getfloat('layout', 'margin_mm')
+	params['layout_width'] = config.getfloat('layout', 'max_row_width_mm')
+
 	return params
