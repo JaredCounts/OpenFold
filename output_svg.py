@@ -3,7 +3,7 @@
 import svgwrite
 from vector import *
 
-def output_svg(svgOutput, slices, notches, notchLabels, material_thickness, flexures, offsets):
+def output_svg(svgOutput, slices, notches, notchLabels, material_thickness, flexure_width, flexures, offsets):
 	svg = svgwrite.Drawing(svgOutput, profile='full')
 
 	for currentSlice in slices:
@@ -40,7 +40,7 @@ def output_svg(svgOutput, slices, notches, notchLabels, material_thickness, flex
 		renderRects(svg, notches[currentSlice], offset, material_thickness)
 		
 		# flexures
-		renderRects(svg, flexures[currentSlice], offset, material_thickness)
+		renderRects(svg, flexures[currentSlice], offset, flexure_width)
 		
 		# slice segments
 		renderSegments(svg, currentSlice.segments, offset)

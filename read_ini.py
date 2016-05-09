@@ -23,4 +23,8 @@ def get_params(ini_file):
 	params['layout_margin'] = config.getfloat('layout', 'margin_mm')
 	params['layout_width'] = config.getfloat('layout', 'max_row_width_mm')
 
+	params['flexure_to_flexure_gap'] = config.getfloat('flexures', 'flexure_to_flexure_mm')
+	params['flexure_width'] = config.getfloat('flexures', 'flexure_width_mm')
+	params['flexure_to_edge'] = config.getfloat('flexures', 'flexure_to_edge_mm')
+
 	return params
