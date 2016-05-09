@@ -36,8 +36,9 @@ def flexurize(slices, material_thickness):
 		# and generate flexures
 		flexureDirection = 'up'
 		approximateFlexureCount = int((notchAxisMax - notchAxisMin) * flexureDensity)
+		flexureInterval = notchAxisRange / approximateFlexureCount
 		for i in range(0, approximateFlexureCount):
-			x = notchAxisMin + i * notchAxisRange / approximateFlexureCount
+			x = notchAxisMin + flexureInterval / 2 + i * flexureInterval
 			
 			minDistanceToNotch = notchAxisRange
 			for notchPosition in notchPositions:
