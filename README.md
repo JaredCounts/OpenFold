@@ -10,10 +10,10 @@ This will generate a svg file of cuts generated from the stl file using paramete
 ## TODO
 ### FEATURES
 * Visualizer
-** Maybe a way to load stl files and export svg files via the visualizer?
-** Add buttons and sliders for parameters
-** A way to manually rotate, scale, and explore the model
-** A non-wireframe mode (ie. have slices not see-through)
+	* Maybe a way to load stl files and export svg files via the visualizer?
+	* Add buttons and sliders for parameters
+	* A way to manually rotate, scale, and explore the model
+	* A non-wireframe mode (ie. have slices not see-through)
 * Improved layout engine (better packing)
 * Lovepop style notching (alternating sides)
 
