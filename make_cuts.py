@@ -14,7 +14,6 @@ import pygame
 def visualizer(slices, notches, flexures):
 	average = [0,0,0]
 	pointCount = 0
-	allSegments = []
 	for slice in slices:
 		for segment in slice.segments:
 			startPoint = segment[0].copy()
@@ -85,6 +84,9 @@ def make_cuts(stlFile, svgOutput, iniParamsFile):
 	material_thickness = params['material_thickness']
 	layout_margin = params['layout_margin']
 	layout_width = params['layout_width']
+	flexure_to_flexure_gap = params['flexure_to_flexure_gap']
+	flexure_width = params['flexure_width']
+	flexure_to_edge = params['flexure_to_edge']
 
 	print("SLICING")
 	slices = slice(stlFile, sliceDensity, stl_scale)
@@ -93,13 +95,13 @@ def make_cuts(stlFile, svgOutput, iniParamsFile):
 	(notches, notchLabels) = notch(slices)
 	
 	print("GENERATING FLEXURES")
-	flexures = flexurize(slices, material_thickness)
+	flexures = flexurize(slices, material_thickness, flexure_to_flexure_gap, flexure_width, flexure_to_edge)
 
 	print("GENERATING LAYOUT")
 	offsets = layout(slices, layout_margin, layout_width)
 	
 	print("GENERATING SVG")
-	output_svg(svgOutput, slices, notches, notchLabels, material_thickness, flexures, offsets)
+	output_svg(svgOutput, slices, notches, notchLabels, material_thickness, flexure_width, flexures, offsets)
 
 	print("VISUALIZING")
 	visualizer(slices, notches, flexures)
