@@ -3,7 +3,8 @@
 Jared, Hunmin, and Anne
 
 ## Instructions
-To use, call `make_cuts(stlFile, svgOutput)` where `stlFile` is the file path to the stl file input and svgOutput is the desired svg file to output the cuts to.
+From command line or terminal, type `python make_cuts.py input.stl output.svg params.ini`
+This will generate a svg file of cuts generated from the stl file using parameters from params.ini.
 
 ## TODO
 ### FEATURES
