@@ -1,4 +1,4 @@
-# 6807-Project
+# OpenFold
 ## Authors
 Jared, Hunmin, and Anne
 
@@ -7,11 +7,8 @@ To use, call `make_cuts(stlFile, svgOutput)` where `stlFile` is the file path to
 
 ## TODO
 ### FEATURES
-* Come up with a neat project name
 * Slice and model rendering
 * Interactive UI
-* Parameterize notch size, flexure size, densities, etc
-	* Could parameterize based on material parameters (eg. material width, stiffness, etc)
 * Improved layout engine (better packing)
 * Lovepop style notching (alternating sides)
 
@@ -21,8 +18,6 @@ To use, call `make_cuts(stlFile, svgOutput)` where `stlFile` is the file path to
 ### BUGS
 * Slicer skipping axis aligned segments.
 * If a whole triangle is on a slice, which segments from it do we add, if any?
-* Slices at origin getting skipped by slicer.
-* Overlapping shapes on layout
 * Notches skipped when there's an odd number of intersections
 * Segments are duplicated?
 
@@ -32,7 +27,6 @@ To use, call `make_cuts(stlFile, svgOutput)` where `stlFile` is the file path to
 * Consistent naming (instead of sometimes using camel casing and sometimes using '_')
 	* http://stackoverflow.com/a/159745/6153561
 * Just use numpy for vectors, maybe?
-* Get rid of cutScalingFactor
 * Better transformation engine (ie. so we don't have to add offset every time in make_cuts)
 * Convert "segment list" in svg to "paths" for better tracing.
 
