@@ -25,6 +25,7 @@ This will generate a svg file of cuts generated from the stl file using paramete
 * If a whole triangle is on a slice, which segments from it do we add, if any?
 * Notches skipped when there's an odd number of intersections
 * Segments are duplicated?
+* Some parts are floating in air -- a simple graph search can check for connectedness.
 
 ### CODE
 * Rename 'index' to 'axis' when referring to specific vector coefficients to be more clear
