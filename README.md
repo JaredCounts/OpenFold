@@ -14,7 +14,7 @@ This will generate a svg file of cuts generated from the stl file using paramete
 * Improved layout engine (better packing)
 * Lovepop style notching (alternating sides)
 
-## OPTIMIZATIONS
+### OPTIMIZATIONS
 * Data structures could improve intersection tests
 
 ### BUGS
