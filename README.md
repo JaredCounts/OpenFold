@@ -15,7 +15,10 @@ This will generate a svg file of cuts generated from the stl file using paramete
 	* A way to manually rotate, scale, and explore the model
 	* A non-wireframe mode (ie. have slices not see-through)
 * Improved layout engine (better packing)
+	* Can better pack polygons on the same slice that aren't connected.
+	* Can also do circle-packing style fitting.
 * Lovepop style notching (alternating sides)
+* A way to export straight to DXF
 
 ### OPTIMIZATIONS
 * Data structures could improve intersection tests
