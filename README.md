@@ -19,6 +19,8 @@ This will generate a svg file of cuts generated from the stl file using paramete
 	* Can also do circle-packing style fitting.
 * Lovepop style notching (alternating sides)
 * A way to export straight to DXF
+* Detect notches that are too close to an edge on the side
+* Notches don't line up nicely with polygon edge (maybe have the notch go farther)
 
 ### OPTIMIZATIONS
 * Data structures could improve intersection tests
