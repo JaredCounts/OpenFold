@@ -1,3 +1,5 @@
+from math import *
+
 # ---------- Vector stuff ----------
 # http://stackoverflow.com/questions/1984799/cross-product-of-two-vectors-in-python
 def cross(a, b):
@@ -33,6 +35,9 @@ def diff(b,a):
 		c.append(b[i] - a[i])
 
 	return c
+
+def norm(a):
+	return mult(a, 1.0/sqrt(dot(a,a)))
 
 # the determinant between two 2d vectors
 def det_2D(a,b):

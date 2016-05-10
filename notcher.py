@@ -52,18 +52,24 @@ def notch(slices):
 
 			# assume that every pair of intersections on each slice corresponds to a "filled" region
 			# (TODO this assumption breaks if the intersection is tangent to some part of the slice)
+			overreach = 3 # how much to extend past the edge
 			for i in range(0, len(sliceAIntersections), 2):
 				sliceAIntersectionA = sliceAIntersections[i]
 				sliceAIntersectionB = sliceAIntersections[i+1]
 				sliceAMidPoint = mult(add(sliceAIntersectionA, sliceAIntersectionB), 0.5)
-				sliceANotch = (sliceAIntersectionA, sliceAMidPoint)
+				
+				direction = norm(diff(sliceAIntersectionA,sliceAIntersectionB))
+				sliceANotch = (add(sliceAIntersectionA, mult(direction,overreach)), sliceAMidPoint)
 				notches[sliceA].append( sliceANotch )
 				labels[sliceA].append(sliceB.label)
 
 				sliceBIntersectionA = sliceBIntersections[i]
 				sliceBIntersectionB = sliceBIntersections[i+1]
 				sliceBMidPoint = mult(add(sliceBIntersectionA, sliceBIntersectionB), 0.5)
-				sliceBNotch = (sliceBMidPoint, sliceBIntersectionB)
+
+				direction = norm(diff(sliceBIntersectionA,sliceBIntersectionB))
+
+				sliceBNotch = (sliceBMidPoint, diff(sliceBIntersectionB, mult(direction, overreach)))
 				notches[sliceB].append( sliceBNotch )
 				labels[sliceB].append(sliceA.label)
 
