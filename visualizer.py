@@ -37,6 +37,8 @@ def visualizer(slices, notches, flexures):
 	clock = pygame.time.Clock()
 
 	rotateX = 0
+	rotateY = 0
+	scale = 1
 
 	resize = min(size) / max_range * 0.75
 
@@ -47,7 +49,16 @@ def visualizer(slices, notches, flexures):
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				done = True
-		# write game logic here
+			if event.type == pygame.MOUSEBUTTONDOWN:
+				if event.button == 4:
+					scale *= 1.15
+				if event.button == 5:
+					scale *= 0.85
+			if event.type == pygame.MOUSEMOTION:
+				if event.buttons[0]:
+					pos = event.rel
+					rotateX -= pos[0] * 0.01
+					rotateY += pos[1] * 0.01
 	 
 		# clear the screen before drawing
 		screen.fill((255, 255, 255)) 
@@ -60,21 +71,26 @@ def visualizer(slices, notches, flexures):
 				endPoint = segment[1].copy()
 				startPoint.insert(slice.axisIndex(), slice.axis_position)
 				endPoint.insert(slice.axisIndex(), slice.axis_position)
-				pygame.draw.aaline(screen, (0,0,0), toTwoD(mult(diff(startPoint, average), resize), rotateX, size[0]/2, size[1]/2), 
-													toTwoD(mult(diff(endPoint, average), resize), rotateX, size[0]/2, size[1]/2))
+				pygame.draw.aaline(screen, (0,0,0), toTwoD(mult(diff(startPoint, average), resize * scale), rotateX, rotateY, size[0]/2, size[1]/2), 
+													toTwoD(mult(diff(endPoint, average), resize * scale), rotateX, rotateY, size[0]/2, size[1]/2))
 
 		# display what’s drawn. this might change.
 		pygame.display.update()
-		rotateX += 0.1
+		# rotateX += 0.1
 		# run at 60 fps
 		clock.tick(60)
 	 
 	# close the window and quit
 	pygame.quit()
 
-def toTwoD(point, rotateX, translateX, translateY):
+def toTwoD(point, rotateX, rotateY, translateX, translateY):
 	transformedPoint = [
 			point[0] * math.cos(rotateX) - point[1] * math.sin(rotateX),
 			point[0] * math.sin(rotateX) + point[1] * math.cos(rotateX),
 			-point[2]]
+	transformedPoint = [
+			transformedPoint[0],
+			transformedPoint[1] * math.cos(rotateY) - transformedPoint[2] * math.sin(rotateY),
+			transformedPoint[1] * math.sin(rotateY) + transformedPoint[2] * math.cos(rotateY)
+		]
 	return [translateX + transformedPoint[0], translateY + transformedPoint[1] + transformedPoint[2]]
