@@ -40,6 +40,7 @@ This will generate a svg file of cuts generated from the stl file using paramete
 * Just use numpy for vectors, maybe?
 * Better transformation engine (ie. so we don't have to add offset every time in make_cuts)
 * Convert "segment list" in svg to "paths" for better tracing.
+* Move visualizer to own module.
 
 ## References
 * [The Creation of V-fold Animal Pop-Up Cards from 3D Models Using a Directed Acyclic Graph](http://link.springer.com/chapter/10.1007%2F978-3-642-35473-1_47)
