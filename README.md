@@ -12,8 +12,8 @@ This will generate a svg file of cuts generated from the stl file using paramete
 * Visualizer
 	* Maybe a way to load stl files and export svg files via the visualizer?
 	* Add buttons and sliders for parameters
-	* A way to manually rotate, scale, and explore the model
 	* A non-wireframe mode (ie. have slices not see-through)
+	* A proper perspective view.
 	* Clean up view logic (use transformation matrices)
 * Improved layout engine (better packing)
 	* Can better pack polygons on the same slice that aren't connected.
