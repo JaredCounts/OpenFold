@@ -14,6 +14,7 @@ This will generate a svg file of cuts generated from the stl file using paramete
 	* Add buttons and sliders for parameters
 	* A way to manually rotate, scale, and explore the model
 	* A non-wireframe mode (ie. have slices not see-through)
+	* Clean up view logic (use transformation matrices)
 * Improved layout engine (better packing)
 	* Can better pack polygons on the same slice that aren't connected.
 	* Can also do circle-packing style fitting.
