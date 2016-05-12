@@ -25,6 +25,7 @@ This will generate a svg file of cuts generated from the stl file using paramete
 
 ### OPTIMIZATIONS
 * Data structures could improve intersection tests
+* Visualizer should use sprites instead of drawing segments manually.
 
 ### BUGS
 * Slicer skipping axis aligned segments.
